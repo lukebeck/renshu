@@ -1,4 +1,4 @@
-const kana = [
+const data = [
   {
     hiragana: 'あ',
     katakana: 'ア',
@@ -61,4 +61,4 @@ const kana = [
   }
 ]
 
-export default kana
+export default data
