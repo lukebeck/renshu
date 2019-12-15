@@ -22,7 +22,11 @@ function Theme(props) {
 
 const defaultSettings = {
   type: 'recall',
-  studying: [1, 2, 3],
+  studying: {
+    1: true,
+    2: true,
+    3: false
+  },
   kana: 'hiragana'
 }
 

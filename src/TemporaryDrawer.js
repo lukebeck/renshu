@@ -39,7 +39,7 @@ function TemporaryDrawer(props) {
     <Drawer anchor='right' open={props.status} onClose={handleClose}>
       {/* <CloseButton handleClick={toggleDrawer(false)} /> */}
       <Box
-        width={300}
+        width={250}
         m={4}
         role='presentation'
         onKeyDown={toggleDrawer(false)}>
