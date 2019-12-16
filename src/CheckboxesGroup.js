@@ -9,8 +9,28 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import Checkbox from '@material-ui/core/Checkbox'
+import { makeStyles } from '@material-ui/core/styles'
+import clsx from 'clsx'
+
+const useStyles = makeStyles(theme => ({
+  error: {
+    backgroundColor: theme.palette.primary.main
+  },
+  icon: {
+    fontSize: 20
+  },
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing(1)
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center'
+  }
+}))
 
 function CheckboxesGroup(props) {
+  const classes = useStyles()
   const data = props.data
   const [values, setValues] = useState(props.values)
 
@@ -36,6 +56,7 @@ function CheckboxesGroup(props) {
   return (
     <FormControl error={error} component='fieldset'>
       <FormLabel component='legend'>Studying</FormLabel>
+
       <FormGroup>
         {data.map((item, index) => (
           <FormControlLabel
@@ -51,20 +72,22 @@ function CheckboxesGroup(props) {
             label={props.kana === 'hiragana' ? item.hiragana : item.katakana}
           />
         ))}
+        <ButtonGroup
+          color='primary'
+          size='small'
+          aria-label='outlined secondary button group'>
+          <Button onClick={() => handleClick(false)}>Select none</Button>
+          <Button onClick={() => handleClick(true)}>Select all</Button>
+        </ButtonGroup>
       </FormGroup>
-      <ButtonGroup
-        color='primary'
-        size='small'
-        aria-label='outlined secondary button group'>
-        <Button onClick={() => handleClick(false)}>Select none</Button>
-        <Button onClick={() => handleClick(true)}>Select all</Button>
-      </ButtonGroup>
       <FormHelperText>
-        <Icon>
-          <WarningRoundedIcon fontSize='small' />
-        </Icon>
+        <span id='client-snackbar' className={classes.message}>
+          <Icon className={clsx(classes.icon, classes.iconVariant)}>
+            <WarningRoundedIcon fontSize='small' />
+          </Icon>
+          Select at least one group
+        </span>
       </FormHelperText>
-      <FormHelperText>You must select at least one group</FormHelperText>
     </FormControl>
   )
 }

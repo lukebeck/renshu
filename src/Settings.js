@@ -49,10 +49,7 @@ function Settings(props) {
   ////
 
   return (
-    <TemporaryDrawer
-      onClose={handleSubmit}
-      onChange={handleDrawer}
-      status={props.drawer}>
+    <React.Fragment>
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
@@ -67,26 +64,31 @@ function Settings(props) {
           message='At least one study group must be selected'
         />
       </Snackbar>
-      <SettingsRadioGroup
-        name='Kana'
-        options={['hiragana', 'katakana']}
-        value={tempSettings.kana}
-        onChange={handleChange}
-      />
-      <SettingsRadioGroup
-        name='Type'
-        options={['recall', 'recognition']}
-        value={tempSettings.type}
-        onChange={handleChange}
-      />
-      <Divider />
-      <CheckboxesGroup
-        kana={tempSettings.kana}
-        values={tempSettings.studying}
-        data={groupings}
-        onChange={handleChange}
-      />
-    </TemporaryDrawer>
+      <TemporaryDrawer
+        onClose={handleSubmit}
+        onChange={handleDrawer}
+        status={props.drawer}>
+        <SettingsRadioGroup
+          name='Kana'
+          options={['hiragana', 'katakana']}
+          value={tempSettings.kana}
+          onChange={handleChange}
+        />
+        <SettingsRadioGroup
+          name='Type'
+          options={['recall', 'recognition']}
+          value={tempSettings.type}
+          onChange={handleChange}
+        />
+        <Divider />
+        <CheckboxesGroup
+          kana={tempSettings.kana}
+          values={tempSettings.studying}
+          data={groupings}
+          onChange={handleChange}
+        />
+      </TemporaryDrawer>
+    </React.Fragment>
   )
 }
 
