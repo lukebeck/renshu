@@ -6,8 +6,15 @@ import shuffle from 'array-shuffle'
 import theme from './theme'
 import data from './data'
 import Settings from './Settings'
+import Card from './Card'
 
-import Button from '@material-ui/core/Button'
+const testData = {
+  question: 'え',
+  answer: 'e',
+  choices: ['a', 'ki', 'ku', 'e'],
+  answered: 11,
+  correct: 7
+}
 
 function Theme(props) {
   return (
@@ -53,13 +60,7 @@ function App() {
         onDrawerChange={handleDrawer}
         onSubmit={handleSettingsSubmit}
       />
-      <Button onClick={() => handleDrawer(true)}>Open drawer</Button>
-      <div>
-        <div>
-          {settings.kana === 'hiragana' ? deck[0].hiragana : deck[0].katakana}
-        </div>
-        <div>{settings.type}</div>
-      </div>
+      <Card data={testData} deck={deck} onClick={() => handleDrawer(true)} />
     </Theme>
   )
 }
