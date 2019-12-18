@@ -13,6 +13,7 @@ export default function RecognitionContents(props) {
     console.log('passed on:' + submission)
   }
   const data = props.data
+  const deck = props.deck
   function handleSubmissionClick(submission) {
     console.log('Answer submitted: ' + submission)
   }
@@ -21,7 +22,7 @@ export default function RecognitionContents(props) {
       <CardContent>
         <Typography align='center' variant='h1' gutterBottom>
           <Box fontWeight={500} fontSize={150} my={2}>
-            {props.data.question}
+            {deck[0].hiragana}
           </Box>
         </Typography>
       </CardContent>
@@ -32,7 +33,7 @@ export default function RecognitionContents(props) {
           direction='row'
           justify='flex-end'
           alignItems='center'>
-          {props.data.choices.map((choice, index) => (
+          {data.choices.map((choice, index) => (
             <Grid key={index} item xs={6} sm={6}>
               <Button
                 onClick={() => handleSubmissionClick(choice)}
