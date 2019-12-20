@@ -50,9 +50,8 @@ export default function KanaCard(props) {
   return (
     <Card className={classes.card}>
       <CardHeader
-        onClick={handleSettingsClick}
         action={
-          <IconButton aria-label='settings'>
+          <IconButton aria-label='settings' onClick={handleSettingsClick}>
             <MoreVertIcon />
           </IconButton>
         }

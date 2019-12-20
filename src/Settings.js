@@ -8,7 +8,14 @@ import Snackbar from './Snackbar'
 const groupings = [
   { group: 1, hiragana: 'あいうえお', katakana: 'アイウエオ' },
   { group: 2, hiragana: 'かきくけこ', katakana: 'カキクケコ' },
-  { group: 3, hiragana: 'さしすせそ', katakana: 'サシスセソ' }
+  { group: 3, hiragana: 'さしすせそ', katakana: 'サシスセソ' },
+  { group: 4, hiragana: 'たちつてと', katakana: 'タチツテト' },
+  { group: 5, hiragana: 'なにぬねの', katakana: 'ナニヌネノ' },
+  { group: 6, hiragana: 'はひふへほ', katakana: 'ハヒフヘホ' },
+  { group: 7, hiragana: 'まみむめも', katakana: 'マミムメモ' },
+  { group: 8, hiragana: 'や　ゆ　よ', katakana: 'ヤ　ユ　ヨ' },
+  { group: 9, hiragana: 'らりるれろ', katakana: 'ラリルレロ' },
+  { group: 10, hiragana: 'わ　を　ん', katakana: 'ワ　ヲ　ン' }
 ]
 
 function Settings(props) {
