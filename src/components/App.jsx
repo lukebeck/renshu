@@ -30,6 +30,9 @@ const DEFAULTS = {
   }
 }
 
+const red = '#ff5252'
+const purple = '#d500f9'
+
 function App() {
   const { cards: initCards, settings: initSettings } =
     JSON.parse(localStorage.getItem('kana-data')) || DEFAULTS
@@ -47,7 +50,7 @@ function App() {
     palette: {
       type: 'dark',
       primary: {
-        main: '#ff1744'
+        main: red
       }
     }
   })
@@ -62,7 +65,7 @@ function App() {
 
   const toggleAltColour = () => {
     let newPalettePrimaryColour =
-      theme.palette.primary.main === '#ff5252' ? '#d500f9' : '#ff5252'
+      theme.palette.primary.main === red ? purple : red
     setTheme({
       theme,
       palette: {
