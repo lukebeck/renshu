@@ -80,7 +80,6 @@ function App() {
   const themeConfig = createMuiTheme(theme)
 
   useEffect(() => {
-    console.log(JSON.stringify({ deck }))
     // localStorage.setItem('kana-data', JSON.stringify({ deck }))
   })
 
@@ -136,6 +135,7 @@ function App() {
           toggleDarkTheme={toggleDarkTheme}
         />
         <Card
+          darkMode={theme.palette.type === 'dark' ? true : false}
           onSubmit={handleQuizSubmit}
           onHeaderClick={() => handleDrawer(true)}
           quiz={quiz}

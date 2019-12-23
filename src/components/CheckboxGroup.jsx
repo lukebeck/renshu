@@ -27,7 +27,8 @@ const useStyles = makeStyles(theme => ({
   },
   message: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    fontSize: 14
   }
 }))
 
@@ -74,10 +75,7 @@ function CheckboxGroup(props) {
             label={props.kana === 'hiragana' ? item.hiragana : item.katakana}
           />
         ))}
-        <ButtonGroup
-          color='primary'
-          size='small'
-          aria-label='outlined secondary button group'>
+        <ButtonGroup size='small' aria-label='outlined secondary button group'>
           <Button onClick={() => handleClick(true)}>Select all</Button>
           <Button onClick={() => handleClick(false)}>Select none</Button>
         </ButtonGroup>

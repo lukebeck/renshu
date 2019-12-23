@@ -5,7 +5,6 @@ import Drawer from './Drawer'
 import RadioGroup from './RadioGroup'
 import Snackbar from './Snackbar'
 import Switch from '@material-ui/core/Switch'
-import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 
@@ -88,7 +87,7 @@ function Settings(props) {
               />
             }
             label='Dark mode'
-            labelPlacement='start'
+            labelPlacement='end'
           />
         </FormControl>
 

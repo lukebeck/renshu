@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 // Material core
-import Box from '@material-ui/core/Box'
+
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -9,6 +9,8 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 // Material icons
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined'
 import EqualizerRoundedIcon from '@material-ui/icons/EqualizerRounded'
 import IconButton from '@material-ui/core/IconButton'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
@@ -17,23 +19,37 @@ import Typography from '@material-ui/core/Typography'
 const useStyles = makeStyles(theme => ({
   card: {
     marginTop: theme.spacing(5),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    height: 485
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    height: 475,
+    borderRadius: 10
+  },
+  character: {
+    fontWeight: 500,
+    fontSize: 150,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3)
+  },
+  darkButton: {
+    color: '#fff'
+  },
+  cardActions: {
+    height: 120
   }
 }))
 
 function CardFooter(props) {
+  const { correct, answered } = props
   return (
     <CardContent>
-      <Grid container>
-        <Grid item xs={1}>
+      <Grid container spacing={1}>
+        <Grid item>
           <EqualizerRoundedIcon color='primary' />
         </Grid>
         <Grid item>
           <Typography variant='overline'>
-            {props.correct} of {props.answered} correct (
-            {((props.correct / props.answered) * 100).toFixed(2) | 0}%)
+            {correct} of {answered} correct (
+            {((correct / answered) * 100).toFixed(2) | 0}%)
           </Typography>
         </Grid>
       </Grid>
@@ -42,12 +58,11 @@ function CardFooter(props) {
 }
 
 const Character = props => {
+  const classes = useStyles()
   return (
     <CardContent>
-      <Typography align='center' variant='h1' gutterBottom>
-        <Box fontWeight={500} fontSize={150} my={2}>
-          {props.display}
-        </Box>
+      <Typography className={classes.character} align='center' variant='h1'>
+        {props.display}
       </Typography>
     </CardContent>
   )
@@ -74,23 +89,34 @@ const QuizCard = props => {
         }
       />
       <Character display={props.quiz.question} />
-      {props.quiz.type === 'recognition' ? (
-        <Recognition
-          quiz={props.quiz}
-          onSubmit={submission => handleSubmit(submission)}
-        />
-      ) : (
-        <Recall
-          quiz={props.quiz}
-          onSubmit={submission => handleSubmit(submission)}
-        />
-      )}
+      <CardActions className={classes.cardActions}>
+        <Grid
+          container
+          spacing={1}
+          direction='row'
+          justify='flex-end'
+          alignItems='center'>
+          {props.quiz.type === 'recognition' ? (
+            <Recognition
+              darkMode={props.darkMode}
+              quiz={props.quiz}
+              onSubmit={submission => handleSubmit(submission)}
+            />
+          ) : (
+            <Recall
+              quiz={props.quiz}
+              onSubmit={submission => handleSubmit(submission)}
+            />
+          )}
+        </Grid>
+      </CardActions>
       <CardFooter correct={props.correct} answered={props.answered} />
     </Card>
   )
 }
 
 const Recognition = props => {
+  const classes = useStyles()
   const { answer, choices } = props.quiz
 
   const [reverse, setReverse] = useState(false)
@@ -109,17 +135,13 @@ const Recognition = props => {
   }
 
   return (
-    <CardActions>
+    <React.Fragment>
       {!reverse ? (
-        <Grid
-          container
-          spacing={2}
-          direction='row'
-          justify='flex-end'
-          alignItems='center'>
+        <React.Fragment>
           {choices.map((choice, index) => (
             <Grid key={index} item xs={6} sm={6}>
               <Button
+                className={props.darkMode ? classes.darkButton : ''}
                 onClick={() => handleResponse(choice)}
                 fullWidth
                 size='large'
@@ -129,41 +151,38 @@ const Recognition = props => {
               </Button>
             </Grid>
           ))}
-        </Grid>
+        </React.Fragment>
       ) : (
-        <Grid
-          container
-          spacing={2}
-          direction='row'
-          justify='flex-end'
-          alignItems='center'>
-          <Grid item xs={12} sm={12}>
-            <Box my={1.3}>
-              <Typography>
-                {`Response: ${response}; Result: ${
-                  answer === response ? 'correct' : 'incorrect'
-                }`}
-              </Typography>
-            </Box>
+        <React.Fragment>
+          <Grid align='center' item xs={12} s={12}>
+            <Typography variant='h4'>{answer}</Typography>
           </Grid>
           <Grid item xs={12} sm={12}>
             <Button
+              startIcon={
+                answer === response ? (
+                  <CheckCircleOutlineIcon />
+                ) : (
+                  <CancelOutlinedIcon />
+                )
+              }
               fullWidth
               size='large'
               variant='outlined'
               color='primary'
               onClick={() => handleSubmit(response)}>
-              Try again
+              {answer === response ? 'Continue' : 'Try again'}
             </Button>
           </Grid>
-        </Grid>
+        </React.Fragment>
       )}
-    </CardActions>
+    </React.Fragment>
   )
 }
 
 function Recall(props) {
   const { answer } = props.quiz
+  const classes = useStyles()
 
   const [reverse, setReverse] = useState(false)
 
@@ -177,14 +196,12 @@ function Recall(props) {
   }
 
   return (
-    <CardActions>
+    <React.Fragment>
       {!reverse ? (
-        <Grid
-          container
-          spacing={2}
-          direction='row'
-          justify='flex-end'
-          alignItems='center'>
+        <React.Fragment>
+          <Grid align='center' item xs={12} s={12}>
+            <Typography variant='h4'>　</Typography>
+          </Grid>
           <Grid item xs={12} sm={12}>
             <Button
               onClick={() => handleReverse()}
@@ -192,19 +209,18 @@ function Recall(props) {
               size='large'
               variant='outlined'
               color='primary'>
-              Flip the card
+              Flip card
             </Button>
           </Grid>
-        </Grid>
+        </React.Fragment>
       ) : (
-        <Grid
-          container
-          spacing={2}
-          direction='row'
-          justify='flex-end'
-          alignItems='center'>
-          <Grid item xs={12} sm={12}>
+        <React.Fragment>
+          <Grid align='center' item xs={12} s={12}>
+            <Typography variant='h4'>{answer}</Typography>
+          </Grid>
+          <Grid item xs={6} sm={6}>
             <Button
+              startIcon={<CheckCircleOutlineIcon />}
               fullWidth
               size='large'
               variant='outlined'
@@ -213,8 +229,9 @@ function Recall(props) {
               Correct
             </Button>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={6} sm={6}>
             <Button
+              startIcon={<CancelOutlinedIcon />}
               fullWidth
               size='large'
               variant='outlined'
@@ -223,64 +240,10 @@ function Recall(props) {
               Incorrect
             </Button>
           </Grid>
-        </Grid>
+        </React.Fragment>
       )}
-    </CardActions>
+    </React.Fragment>
   )
-
-  // return (
-  //   <CardActions>
-  //     {!reverse ? (
-  //       <Grid
-  //         container
-  //         spacing={2}
-  //         direction='row'
-  //         justify='flex-end'
-  //         alignItems='center'>
-  //         <Grid item xs={12} sm={12}>
-  //           <Box mt={7}>
-  //             <Button
-  //               onClick={() => handleReverse}
-  //               fullWidth
-  //               size='large'
-  //               variant='outlined'
-  //               color='primary'>
-  //               Flip card
-  //             </Button>
-  //           </Box>
-  //         </Grid>
-  //       </Grid>
-  //     ) : (
-  //       <Grid
-  //         container
-  //         spacing={2}
-  //         direction='row'
-  //         justify='flex-end'
-  //         alignItems='center'>
-  //         <Grid item xs={12} sm={12}>
-  //           <Box mt={7}>
-  //             <Button
-  //               onClick={handleSubmit(true)}
-  //               fullWidth
-  //               size='large'
-  //               variant='outlined'
-  //               color='primary'>
-  //               Correct
-  //             </Button>
-  //             <Button
-  //               onClick={handleSubmit(false)}
-  //               fullWidth
-  //               size='large'
-  //               variant='outlined'
-  //               color='primary'>
-  //               Incorrect
-  //             </Button>
-  //           </Box>
-  //         </Grid>
-  //       </Grid>
-  //     )}
-  //   </CardActions>
-  // )
 }
 
 export default QuizCard
