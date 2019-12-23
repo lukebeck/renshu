@@ -50,22 +50,17 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const RecognitionCard = props => {
+const RecallCard = props => {
   const { darkMode, onSubmit, onHeaderClick, quiz, stats } = props.data
   const [reverse, setReverse] = useState(false)
   const classes = useStyles()
 
-  const [response, setResponse] = useState('')
-
-  function handleResponse(selection) {
-    setResponse(selection)
+  function handleReverse() {
     setReverse(!reverse)
   }
 
-  function handleSubmit() {
-    const result = quiz.answer === response
-    onSubmit(result)
-    setResponse('')
+  function handleSubmit(response) {
+    onSubmit(response)
     setReverse(!reverse)
   }
 
@@ -117,22 +112,28 @@ const RecognitionCard = props => {
               <Grid align='center' item xs={12} s={12}>
                 <Typography variant='h4'>{quiz.answer}</Typography>
               </Grid>
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={6} sm={6}>
                 <Button
-                  startIcon={
-                    quiz.answer === response ? (
-                      <CheckCircleOutlineIcon />
-                    ) : (
-                      <CancelOutlinedIcon />
-                    )
-                  }
+                  className={darkMode ? classes.darkButton : ''}
+                  startIcon={<CheckCircleOutlineIcon />}
                   fullWidth
                   size='large'
                   variant='outlined'
-                  className={darkMode ? classes.darkButton : ''}
                   color='primary'
-                  onClick={() => handleSubmit(response)}>
-                  {quiz.answer === response ? 'Continue' : 'Try again'}
+                  onClick={() => handleSubmit(true)}>
+                  Correct
+                </Button>
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Button
+                  className={darkMode ? classes.darkButton : ''}
+                  startIcon={<CancelOutlinedIcon />}
+                  fullWidth
+                  size='large'
+                  variant='outlined'
+                  color='primary'
+                  onClick={() => handleSubmit(false)}>
+                  Incorrect
                 </Button>
               </Grid>
             </Grid>
@@ -188,20 +189,20 @@ const RecognitionCard = props => {
             direction='row'
             justify='flex-end'
             alignItems='center'>
-            {/* Card face internals go here */}
-            {quiz.choices.map((choice, index) => (
-              <Grid key={index} item xs={6} sm={6}>
-                <Button
-                  className={darkMode ? classes.darkButton : ''}
-                  onClick={() => handleResponse(choice)}
-                  fullWidth
-                  size='large'
-                  variant='outlined'
-                  color='primary'>
-                  {choice}
-                </Button>
-              </Grid>
-            ))}
+            <Grid align='center' item xs={12} s={12}>
+              <Typography variant='h4'>　</Typography>
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Button
+                className={darkMode ? classes.darkButton : ''}
+                onClick={() => handleReverse()}
+                fullWidth
+                size='large'
+                variant='outlined'
+                color='primary'>
+                Flip card
+              </Button>
+            </Grid>
           </Grid>
         </CardActions>
         {/* Card footer */}
@@ -223,4 +224,4 @@ const RecognitionCard = props => {
   )
 }
 
-export default RecognitionCard
+export default RecallCard

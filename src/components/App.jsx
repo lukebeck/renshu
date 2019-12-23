@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 // App components
 import Card from './Card'
+import Card2 from './Card2'
 import Settings from './Settings'
 import dealer from '../utils/dealer'
 import data from '../data'
@@ -134,14 +135,27 @@ function App() {
           toggleAltColour={toggleAltColour}
           toggleDarkTheme={toggleDarkTheme}
         />
-        <Card
-          darkMode={theme.palette.type === 'dark' ? true : false}
-          onSubmit={handleQuizSubmit}
-          onHeaderClick={() => handleDrawer(true)}
-          quiz={quiz}
-          correct={stats.correct}
-          answered={stats.answered}
-        />
+        {quiz.type === 'recognition' ? (
+          <Card
+            data={{
+              darkMode: theme.palette.type === 'dark' ? true : false,
+              onSubmit: submission => handleQuizSubmit(submission),
+              onHeaderClick: () => handleDrawer(true),
+              quiz: quiz,
+              stats: stats
+            }}
+          />
+        ) : (
+          <Card2
+            data={{
+              darkMode: theme.palette.type === 'dark' ? true : false,
+              onSubmit: submission => handleQuizSubmit(submission),
+              onHeaderClick: () => handleDrawer(true),
+              quiz: quiz,
+              stats: stats
+            }}
+          />
+        )}
       </Container>
     </ThemeProvider>
   )
