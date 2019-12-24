@@ -7,6 +7,40 @@ import Snackbar from './Snackbar'
 import Switch from '@material-ui/core/Switch'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Table from './Table'
+
+const columns = [
+  { id: 'index', label: 'Index', minWidth: 50 },
+  { id: 'hiragana', label: 'Hiragana', minWidth: 50 },
+  { id: 'katakana', label: 'Katakana', minWidth: 50 },
+  { id: 'romaji', label: 'Romaji', minWidth: 50 },
+  {
+    id: 'answered',
+    label: 'Answered',
+    minWidth: 50,
+    align: 'right',
+    format: value => value.toLocaleString()
+  },
+  {
+    id: 'correct',
+    label: 'Correct',
+    minWidth: 50,
+    align: 'right',
+    format: value => value.toLocaleString()
+  },
+  {
+    id: 'percent',
+    label: 'Percentage',
+    minWidth: 75,
+    align: 'right',
+    format: value => value.toFixed(2)
+  }
+]
 
 const groupings = [
   { group: 1, hiragana: 'あいうえお', katakana: 'アイウエオ' },
@@ -64,6 +98,12 @@ function Settings(props) {
     setOpenSnackbar(false)
   }
 
+  const [dialog, setDialog] = useState(false)
+
+  const handleDialogClose = () => {
+    setDialog(false)
+  }
+
   return (
     <React.Fragment>
       <Snackbar
@@ -72,10 +112,27 @@ function Settings(props) {
         variant='error'
         message='At least one study group must be selected'
       />
+      <Dialog
+        open={dialog}
+        onClose={handleDialogClose}
+        scroll={'body'}
+        aria-labelledby='scroll-dialog-title'
+        aria-describedby='scroll-dialog-description'>
+        <DialogTitle id='scroll-dialog-title'>Cards</DialogTitle>
+        <DialogContent dividers={true}>
+          <Table columns={columns} deck={props.deck} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color='primary'>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Drawer
         onClose={handleSubmit}
         onChange={handleDrawer}
         status={props.drawer}>
+        <Button onClick={() => setDialog(true)}>View deck</Button>
         <FormControl component='fieldset'>
           <FormControlLabel
             value={props.dark}

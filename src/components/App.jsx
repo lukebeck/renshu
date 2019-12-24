@@ -127,6 +127,7 @@ function App() {
       <CssBaseline />
       <Container maxWidth='xs'>
         <Settings
+          deck={deck}
           dark={theme.palette.type}
           settings={settings}
           drawer={drawer}

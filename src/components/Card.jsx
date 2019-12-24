@@ -22,8 +22,8 @@ const useStyles = makeStyles(theme => ({
   character: {
     fontWeight: 500,
     fontSize: 150,
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(3)
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   darkButton: {
     color: '#fff'
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 10,
     willChange: 'transform, opacity',
     height: 475,
-    width: 300,
+    width: 350,
     position: 'absolute',
     marginTop: theme.spacing(5)
   }
