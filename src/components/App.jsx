@@ -5,8 +5,8 @@ import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 // App components
-import Card from './Card'
-import Card2 from './Card2'
+import RecognitionQuiz from './RecognitionQuiz'
+import RecallQuiz from './RecallQuiz'
 import Settings from './Settings'
 import dealer from '../utils/dealer'
 import data from '../data'
@@ -137,7 +137,7 @@ function App() {
           toggleDarkTheme={toggleDarkTheme}
         />
         {quiz.type === 'recognition' ? (
-          <Card
+          <RecognitionQuiz
             data={{
               darkMode: theme.palette.type === 'dark' ? true : false,
               onSubmit: submission => handleQuizSubmit(submission),
@@ -147,7 +147,7 @@ function App() {
             }}
           />
         ) : (
-          <Card2
+          <RecallQuiz
             data={{
               darkMode: theme.palette.type === 'dark' ? true : false,
               onSubmit: submission => handleQuizSubmit(submission),
