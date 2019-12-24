@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import clsx from 'clsx'
 // Material Core
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
@@ -17,15 +18,17 @@ const useStyles = makeStyles(theme => ({
   character: {
     fontWeight: 500,
     fontSize: 150,
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginTop: theme.spacing(0),
+    marginBottom: theme.spacing(0)
   },
   button: {
     color: '#fff'
   },
-  cardActions: {
-    height: 120
-  }
+  cardActions: { height: 100 },
+  icon: {
+    fontSize: 20
+  },
+  characterContainer: { height: 250 }
 }))
 
 const RecallQuiz = props => {
@@ -52,13 +55,14 @@ const RecallQuiz = props => {
         reverse={reverse}
         onHeaderClick={onHeaderClick}
         stats={stats}>
-        <CardContent>
+        <CardContent className={classes.characterContainer}>
           <Typography className={classes.character} align='center' variant='h1'>
             {quiz.question}
           </Typography>
-          {/* A subtitle space should go in here for use on the card reverse */}
+          <Typography align='center' color='primary' variant='h3'>
+            {quiz.answer}
+          </Typography>
         </CardContent>
-        {/* Quiz choices */}
         <CardActions className={classes.cardActions}>
           <Grid
             container
@@ -66,13 +70,9 @@ const RecallQuiz = props => {
             direction='row'
             justify='flex-end'
             alignItems='center'>
-            {/* Card face internals go here */}
-            <Grid align='center' item xs={12} s={12}>
-              <Typography variant='h4'>{quiz.answer}</Typography>
-            </Grid>
             <Grid item xs={6} sm={6}>
               <Button
-                className={darkMode ? classes.darkButton : ''}
+                className={clsx(darkMode && classes.button)}
                 startIcon={<CheckCircleOutlineIcon />}
                 fullWidth
                 size='large'
@@ -84,7 +84,7 @@ const RecallQuiz = props => {
             </Grid>
             <Grid item xs={6} sm={6}>
               <Button
-                className={darkMode ? classes.darkButton : ''}
+                className={clsx(darkMode && classes.button)}
                 startIcon={<CancelOutlinedIcon />}
                 fullWidth
                 size='large'
@@ -103,13 +103,11 @@ const RecallQuiz = props => {
         reverse={reverse}
         onHeaderClick={onHeaderClick}
         stats={stats}>
-        <CardContent>
+        <CardContent className={classes.characterContainer}>
           <Typography className={classes.character} align='center' variant='h1'>
             {quiz.question}
           </Typography>
-          {/* A subtitle space should go in here for use on the card reverse */}
         </CardContent>
-        {/* Quiz choices */}
         <CardActions className={classes.cardActions}>
           <Grid
             container
@@ -117,12 +115,9 @@ const RecallQuiz = props => {
             direction='row'
             justify='flex-end'
             alignItems='center'>
-            <Grid align='center' item xs={12} s={12}>
-              <Typography variant='h4'>　</Typography>
-            </Grid>
             <Grid item xs={12} sm={12}>
               <Button
-                className={darkMode ? classes.darkButton : ''}
+                className={clsx(darkMode && classes.button)}
                 onClick={() => handleReverse()}
                 fullWidth
                 size='large'

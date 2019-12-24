@@ -25,14 +25,16 @@ const useStyles = makeStyles(theme => ({
   c: {
     borderRadius: 10,
     willChange: 'transform, opacity',
-    height: 475,
+    height: 485,
     width: 350,
     position: 'absolute',
     marginTop: theme.spacing(5)
-  }
+  },
+  footer: {}
 }))
 
 const CardInner = props => {
+  const classes = useStyles()
   const { onHeaderClick, face, reverse, stats } = props
   const style = face === 'back' ? { opacity: !reverse ? '0' : '1' } : {}
 
@@ -46,7 +48,7 @@ const CardInner = props => {
         }
       />
       <div style={style}>{props.children}</div>
-      <CardContent>
+      <CardContent className={classes.footer}>
         <Grid container spacing={1}>
           <Grid item>
             <EqualizerRoundedIcon color='primary' />
