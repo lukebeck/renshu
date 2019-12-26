@@ -1,7 +1,7 @@
 {
-  "name": "kana",
+  "name": "renshu",
   "version": "0.2.2",
-  "homepage": "http://lukebeck.github.io/kana",
+  "homepage": "http://renshu.now.sh",
   "author": "Luke Beck",
   "private": true,
   "dependencies": {
@@ -41,7 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "gh-pages": "^2.1.1"
-  }
+  "devDependencies": {}
 }
