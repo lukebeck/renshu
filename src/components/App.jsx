@@ -58,7 +58,7 @@ function App() {
     palette: {
       type: 'dark',
       primary: {
-        main: red
+        main: settings.kana === 'hiragana' ? red : purple
       }
     }
   })
@@ -71,9 +71,9 @@ function App() {
     })
   }
 
-  const toggleAltColour = () => {
-    let newPalettePrimaryColour =
-      theme.palette.primary.main === red ? purple : red
+  const toggleAltColour = kana => {
+    console.log(kana)
+    let newPalettePrimaryColour = kana === 'hiragana' ? red : purple
     setTheme({
       theme,
       palette: {

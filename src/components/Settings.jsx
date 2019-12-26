@@ -70,7 +70,7 @@ function Settings(props) {
   function handleChange(key, value) {
     const updatedSettings = { ...tempSettings, [key]: value }
     if (tempSettings.kana !== updatedSettings.kana) {
-      toggleAltColour()
+      toggleAltColour(value)
     }
     setTempSettings(updatedSettings)
   }

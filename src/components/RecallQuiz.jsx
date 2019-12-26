@@ -21,8 +21,11 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(0)
   },
-  button: {
+  Darkbutton: {
     color: '#fff'
+  },
+  button: {
+    fontSize: 20
   },
   cardActions: { height: 100 },
   icon: {
@@ -72,7 +75,7 @@ const RecallQuiz = props => {
             alignItems='center'>
             <Grid item xs={6} sm={6}>
               <Button
-                className={clsx(darkMode && classes.button)}
+                className={clsx(classes.button, darkMode && classes.Darkbutton)}
                 startIcon={<CheckCircleOutlineIcon />}
                 fullWidth
                 size='large'
