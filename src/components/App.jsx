@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import shuffle from 'array-shuffle'
 // Material core
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -11,28 +10,25 @@ import Settings from './Settings'
 import dealer from '../utils/dealer'
 import data from '../data'
 
-const DEFAULTS = {
-  cards: shuffle(data.map(item => ({ ...item, answered: 0, correct: 0 }))),
-  settings: {
-    type: 'recognition',
-    kana: 'hiragana',
-    studying: {
-      1: true,
-      2: true,
-      3: true,
-      4: true,
-      5: true,
-      6: true,
-      7: true,
-      8: true,
-      9: true,
-      10: true,
-      11: false,
-      12: false,
-      13: false,
-      14: false,
-      15: false
-    }
+const DEFAULT_SETTINGS = {
+  type: 'recognition',
+  kana: 'hiragana',
+  studying: {
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+    8: true,
+    9: true,
+    10: true,
+    11: false,
+    12: false,
+    13: false,
+    14: false,
+    15: false
   }
 }
 
@@ -40,17 +36,23 @@ const red = '#ff5252'
 const purple = '#d500f9'
 
 function App() {
-  const { cards: initCards, settings: initSettings } =
-    JSON.parse(localStorage.getItem('kana-data')) || DEFAULTS
-  const [settings, setSettings] = useState(initSettings)
+  const cards = data
+  const save = JSON.parse(localStorage.getItem('kana-data'))
+  const [settings, setSettings] = useState(
+    save ? save.settings : DEFAULT_SETTINGS
+  )
   const [deck, setDeck] = useState(
-    dealer()
-      .build(initCards, settings)
-      .getDeck()
+    save
+      ? save.deck
+      : dealer()
+          .build(cards, settings)
+          .getDeck()
   )
   const [drawer, setDrawer] = useState(false)
   const [quiz, setQuiz] = useState(dealer(deck).getQuiz(settings))
-  const [stats, setStats] = useState({ answered: 0, correct: 0 })
+  const [stats, setStats] = useState(
+    save ? save.stats : { answered: 0, correct: 0 }
+  )
 
   const [theme, setTheme] = useState({
     palette: {
@@ -86,7 +88,7 @@ function App() {
   const themeConfig = createMuiTheme(theme)
 
   useEffect(() => {
-    // localStorage.setItem('kana-data', JSON.stringify({ deck }))
+    localStorage.setItem('kana-data', JSON.stringify({ deck, settings, stats }))
   })
 
   function handleSettingsSubmit(newSettings) {
@@ -103,7 +105,7 @@ function App() {
       setQuiz(dealer(newDeck).getQuiz(newSettings))
     } else if (newSettings.studying !== settings.studying) {
       let newDeck = dealer(deck)
-        .rebuild(settings, newSettings, initCards)
+        .rebuild(settings, newSettings, cards)
         .getDeck()
       setDeck(newDeck)
       setQuiz(dealer(newDeck).getQuiz(newSettings))
@@ -127,6 +129,14 @@ function App() {
     setQuiz(dealer(newDeck).getQuiz(settings))
   }
 
+  const quizData = {
+    darkMode: theme.palette.type === 'dark' ? true : false,
+    onSubmit: submission => handleQuizSubmit(submission),
+    onHeaderClick: () => handleDrawer(true),
+    quiz: quiz,
+    stats: stats
+  }
+
   return (
     <ThemeProvider theme={themeConfig}>
       <CssBaseline />
@@ -142,25 +152,9 @@ function App() {
           toggleDarkTheme={toggleDarkTheme}
         />
         {quiz.type === 'recognition' ? (
-          <RecognitionQuiz
-            data={{
-              darkMode: theme.palette.type === 'dark' ? true : false,
-              onSubmit: submission => handleQuizSubmit(submission),
-              onHeaderClick: () => handleDrawer(true),
-              quiz: quiz,
-              stats: stats
-            }}
-          />
+          <RecognitionQuiz data={quizData} />
         ) : (
-          <RecallQuiz
-            data={{
-              darkMode: theme.palette.type === 'dark' ? true : false,
-              onSubmit: submission => handleQuizSubmit(submission),
-              onHeaderClick: () => handleDrawer(true),
-              quiz: quiz,
-              stats: stats
-            }}
-          />
+          <RecallQuiz data={quizData} />
         )}
       </Container>
     </ThemeProvider>

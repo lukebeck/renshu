@@ -19,12 +19,15 @@ const _parseSettings = settings => {
 const dealer = (deck = []) => {
   let deckArray = deck
   const obj = {
-    // Builds up a new deck by filtering all cards against settings
-    // @param {array} cards - Array containing all card objects
-    // @param {object} settings - Object containing card study settings
-    // @returns {array} deck
+    _prepareCards(data) {
+      const cards = shuffle(
+        data.map(item => ({ ...item, answered: 0, correct: 0 }))
+      )
+      return cards
+    },
 
-    build(cards, settings) {
+    build(data, settings) {
+      const cards = this._prepareCards(data)
       return this.filter(settings, cards)
     },
 
@@ -97,7 +100,8 @@ const dealer = (deck = []) => {
     },
 
     // Rebuilds the deck after a settings update
-    rebuild(prevSettings, newSettings, cards) {
+    rebuild(prevSettings, newSettings, data) {
+      const cards = this._prepareCards(data)
       const { removed, added } = arrayDiff.diff(
         _parseSettings(prevSettings.studying),
         _parseSettings(newSettings.studying)

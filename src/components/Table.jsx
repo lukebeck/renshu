@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 export default function StickyHeadTable(props) {
   const classes = useStyles()
   const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(10)
+  const [rowsPerPage, setRowsPerPage] = React.useState(100)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -34,7 +34,7 @@ export default function StickyHeadTable(props) {
 
   function createData(card) {
     const { index, hiragana, katakana, romaji, answered, correct } = card
-    const percent = (correct / 100) * answered || 0
+    const percent = (correct / answered) * 100 || 0
     return { index, hiragana, katakana, romaji, answered, correct, percent }
   }
 

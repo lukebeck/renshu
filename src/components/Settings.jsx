@@ -38,7 +38,7 @@ const columns = [
     label: 'Percentage',
     minWidth: 75,
     align: 'right',
-    format: value => value.toFixed(2)
+    format: value => parseInt(value)
   }
 ]
 
