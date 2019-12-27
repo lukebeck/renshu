@@ -13,6 +13,16 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Table from './Table'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontFamily: 'Permanent Marker',
+    fontSize: 50,
+    transform: 'skewY(-10deg)'
+  }
+}))
 
 const columns = [
   { id: 'index', label: 'Index', minWidth: 50 },
@@ -61,6 +71,7 @@ const groupings = [
 ]
 
 function Settings(props) {
+  const classes = useStyles()
   const { toggleAltColour, toggleDarkTheme } = props
 
   const previousSettings = props.settings
@@ -137,6 +148,7 @@ function Settings(props) {
         onClose={handleSubmit}
         onChange={handleDrawer}
         status={props.drawer}>
+        <Typography className={classes.title}>Renshu</Typography>
         <Button onClick={() => setDialog(true)}>View deck</Button>
         <FormControl component='fieldset'>
           <FormControlLabel

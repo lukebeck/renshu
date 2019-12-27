@@ -4,8 +4,8 @@ import Drawer from '@material-ui/core/Drawer'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 // Material icons
-import CloseIcon from '@material-ui/icons/Close'
-import IconButton from '@material-ui/core/IconButton'
+// import CloseIcon from '@material-ui/icons/Close'
+// import IconButton from '@material-ui/core/IconButton'
 
 // This is what I used to effectively implement dark mode in App.js,
 // so a props.toggleDarkMode with a value of ```() => toggleDarkMode()```
@@ -44,12 +44,13 @@ export default function KanaDrawer(props) {
 
   return (
     <Drawer anchor='right' open={props.status} onClose={handleClose}>
-      <IconButton
+      {/* <IconButton
+        style={{ position: 'absolute', right: '0px', top: '0px' }}
         onClick={handleClose}
         className={classes.close}
         aria-label='close'>
         <CloseIcon />
-      </IconButton>
+      </IconButton> */}
       <Grid
         spacing={2}
         container
