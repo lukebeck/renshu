@@ -4,41 +4,27 @@ import clsx from 'clsx'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 // Material icons
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 // Components
 import CardBase from './CardBase'
+import Character from './Character'
 
 const useStyles = makeStyles(theme => ({
-  character: {
-    fontWeight: 500,
-    fontSize: 150,
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(0)
-  },
   Darkbutton: {
     color: '#fff'
   },
   button: {
     fontSize: 20
   },
-  cardActions: { height: 100 },
-  icon: {
-    fontSize: 20
-  },
-  characterContainer: { height: 250 },
-  incorrect: {
-    color: '#FE6B8B',
-    border: '1px solid #FE6B8B'
-  },
   correct: {
-    color: 'rgb(30,230,130)',
-    border: '1px solid rgb(30,230,130)'
+    color: '#00e676'
+  },
+  incorrect: {
+    color: '#ff3d00'
   }
 }))
 
@@ -66,46 +52,26 @@ const RecallQuiz = props => {
         reverse={reverse}
         onHeaderClick={onHeaderClick}
         stats={stats}>
-        <CardContent className={classes.characterContainer}>
-          <Typography className={classes.character} align='center' variant='h1'>
-            {quiz.question}
-          </Typography>
-          <Typography align='center' color='primary' variant='h3'>
-            {quiz.answer}
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.cardActions}>
-          <Grid
-            container
-            spacing={1}
-            direction='row'
-            justify='flex-end'
-            alignItems='center'>
-            <Grid item xs={6} sm={6}>
+        <Character main={quiz.question} sub={quiz.answer} />
+        <CardActions>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={12}>
               <Button
-                className={clsx(
-                  classes.button,
-                  darkMode && classes.Darkbutton,
-                  classes.correct
-                )}
-                startIcon={<CheckCircleOutlineIcon />}
+                className={clsx(classes.button, darkMode && classes.Darkbutton)}
+                startIcon={
+                  <CheckCircleOutlineIcon className={classes.correct} />
+                }
                 fullWidth
-                size='large'
                 variant='outlined'
                 onClick={() => handleSubmit(true)}>
                 Correct
               </Button>
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={12} sm={12}>
               <Button
-                className={clsx(
-                  classes.button,
-                  darkMode && classes.Darkbutton,
-                  classes.incorrect
-                )}
-                startIcon={<CancelOutlinedIcon />}
+                className={clsx(classes.button, darkMode && classes.Darkbutton)}
+                startIcon={<CancelOutlinedIcon className={classes.incorrect} />}
                 fullWidth
-                size='large'
                 variant='outlined'
                 onClick={() => handleSubmit(false)}>
                 Incorrect
@@ -119,18 +85,9 @@ const RecallQuiz = props => {
         reverse={reverse}
         onHeaderClick={onHeaderClick}
         stats={stats}>
-        <CardContent className={classes.characterContainer}>
-          <Typography className={classes.character} align='center' variant='h1'>
-            {quiz.question}
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.cardActions}>
-          <Grid
-            container
-            spacing={1}
-            direction='row'
-            justify='flex-end'
-            alignItems='center'>
+        <Character main={quiz.question} />
+        <CardActions>
+          <Grid container>
             <Grid item xs={12} sm={12}>
               <Button
                 className={clsx(darkMode && classes.button)}

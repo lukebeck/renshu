@@ -32,7 +32,7 @@ const DEFAULT_SETTINGS = {
   }
 }
 
-const red = '#ff5252'
+const red = '#ff3d00'
 const purple = '#d500f9'
 
 function App() {
@@ -59,9 +59,6 @@ function App() {
       type: 'dark',
       primary: {
         main: settings.kana === 'hiragana' ? red : purple
-      },
-      error: {
-        main: '#ff5252'
       }
     }
   })

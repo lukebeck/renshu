@@ -30,6 +30,14 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     marginTop: theme.spacing(5)
   },
+  insiderContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    height: 350
+  },
   footer: {}
 }))
 
@@ -47,7 +55,9 @@ const CardInner = props => {
           </IconButton>
         }
       />
-      <div style={style}>{props.children}</div>
+      <div className={classes.insiderContainer} style={style}>
+        {props.children}
+      </div>
       <CardContent className={classes.footer}>
         <Grid container spacing={1}>
           <Grid item>
