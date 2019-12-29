@@ -58,6 +58,16 @@ const RecallQuiz = props => {
             <Grid item xs={12} sm={12}>
               <Button
                 className={clsx(classes.button, darkMode && classes.Darkbutton)}
+                startIcon={<CancelOutlinedIcon className={classes.incorrect} />}
+                fullWidth
+                variant='outlined'
+                onClick={() => handleSubmit(false)}>
+                Incorrect
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Button
+                className={clsx(classes.button, darkMode && classes.Darkbutton)}
                 startIcon={
                   <CheckCircleOutlineIcon className={classes.correct} />
                 }
@@ -65,16 +75,6 @@ const RecallQuiz = props => {
                 variant='outlined'
                 onClick={() => handleSubmit(true)}>
                 Correct
-              </Button>
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <Button
-                className={clsx(classes.button, darkMode && classes.Darkbutton)}
-                startIcon={<CancelOutlinedIcon className={classes.incorrect} />}
-                fullWidth
-                variant='outlined'
-                onClick={() => handleSubmit(false)}>
-                Incorrect
               </Button>
             </Grid>
           </Grid>
