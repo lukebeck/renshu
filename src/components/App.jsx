@@ -64,7 +64,28 @@ function App() {
     }
   })
 
-  const toggleDarkTheme = event => {
+  const resetDeck = () => {
+    const newSettings = DEFAULT_SETTINGS
+    const newDeck = dealer()
+      .build(cards, newSettings)
+      .getDeck()
+    const newTheme = {
+      palette: {
+        type: newSettings.darkMode ? 'dark' : 'light',
+        primary: {
+          main: newSettings.kana === 'hiragana' ? red : purple
+        }
+      }
+    }
+
+    setSettings(newSettings)
+    setDeck(newDeck)
+    setStats({ answered: 0, correct: 0 })
+    setQuiz(dealer(newDeck).getQuiz(newSettings))
+    setTheme(newTheme)
+  }
+
+  const toggleDarkTheme = () => {
     let darkMode = !settings.darkMode
     let newPaletteType = darkMode ? 'dark' : 'light'
     setSettings({ ...settings, darkMode: darkMode })
@@ -102,9 +123,11 @@ function App() {
         .reset()
         .filter(newSettings)
         .shuffle()
+        .reset()
         .getDeck()
       setDeck(newDeck)
       setQuiz(dealer(newDeck).getQuiz(newSettings))
+      setStats({ correct: 0, answered: 0 })
     } else if (newSettings.studying !== settings.studying) {
       let newDeck = dealer(deck)
         .rebuild(settings, newSettings, cards)
@@ -149,6 +172,7 @@ function App() {
           drawer={drawer}
           onDrawerChange={handleDrawer}
           onSubmit={handleSettingsSubmit}
+          resetDeck={resetDeck}
           toggleAltColour={toggleAltColour}
           toggleDarkTheme={toggleDarkTheme}
         />

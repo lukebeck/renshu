@@ -72,7 +72,7 @@ const groupings = [
 
 function Settings(props) {
   const classes = useStyles()
-  const { toggleAltColour, toggleDarkTheme } = props
+  const { toggleAltColour, toggleDarkTheme, resetDeck } = props
 
   const previousSettings = props.settings
   const [tempSettings, setTempSettings] = useState(props.settings)
@@ -84,6 +84,12 @@ function Settings(props) {
       toggleAltColour(value)
     }
     setTempSettings(updatedSettings)
+  }
+
+  function handleReset() {
+    setOpenSnackbar(false)
+    handleDrawer(false)
+    resetDeck()
   }
 
   function handleSubmit() {
@@ -154,6 +160,7 @@ function Settings(props) {
         onChange={handleDrawer}
         status={props.drawer}>
         <Typography className={classes.title}>Renshu</Typography>
+        <Button onClick={() => handleReset()}>Reset deck</Button>
         <Button onClick={() => setDialog(true)}>View deck</Button>
         <FormControl component='fieldset'>
           <FormControlLabel
