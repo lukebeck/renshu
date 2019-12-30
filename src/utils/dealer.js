@@ -108,11 +108,16 @@ const dealer = (deck = []) => {
       )
       if (removed.length > 0) {
         deckArray = deckArray.filter(item => !removed.includes(item.group))
-      } else if (added.length > 0) {
+        console.log('removed')
+        console.log(deckArray)
+      }
+      if (added.length > 0) {
         let newCards = shuffle(
           cards.filter(item => added.includes(item.group))
         ).map(item => ({ ...item, answered: 0, correct: 0 }))
         deckArray = [...newCards, ...deckArray]
+        console.log('added')
+        console.log(deckArray)
       }
 
       return this
